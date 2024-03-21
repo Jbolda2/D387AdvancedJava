@@ -13,28 +13,49 @@ import {map} from "rxjs/operators";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
-  constructor(private httpClient:HttpClient){}
+  constructor(private httpClient: HttpClient) {
+  }
 
-  private baseURL:string='http://localhost:8080';
+  private baseURL: string = 'http://localhost:8080';
 
-  private getUrl:string = this.baseURL + '/room/reservation/v1/';
-  private postUrl:string = this.baseURL + '/room/reservation/v1';
-  public submitted!:boolean;
-  roomsearch! : FormGroup;
-  rooms! : Room[];
-  request!:ReserveRoomRequest;
-  currentCheckInVal!:string;
-  currentCheckOutVal!:string;
+  private getUrl: string = this.baseURL + '/room/reservation/v1/';
+  private postUrl: string = this.baseURL + '/room/reservation/v1';
+  public submitted!: boolean;
+  roomsearch!: FormGroup;
+  rooms!: Room[];
+  request!: ReserveRoomRequest;
+  currentCheckInVal!: string;
+  currentCheckOutVal!: string;
+  announceWelcome$!: Observable<string>
+  welcome!: string;
+  message2!: Observable<string>;
 
-    ngOnInit(){
-      this.roomsearch= new FormGroup({
-        checkin: new FormControl(' '),
-        checkout: new FormControl(' ')
-      });
+  /*getWelcomeMessages(): Observable<string[]> {
+    return this.httpClient.get<string[]>(this.baseURL + 'welcome/welcome', {responseType: 'text'});
+  }*/
 
- //     this.rooms=ROOMS;
+
+  ngOnInit() {
+
+    // this.announceWelcome$ = this.httpClient.get(this.baseURL + '/room/reservation/v1/livepresentation', {responseType: 'text'} )
+    this.message2 = this.httpClient.get(this.baseURL + '/api/welcome', {responseType: 'text'})
+
+    this.getWelcomeMessage().subscribe(
+      // message => {console.log(Object.values(message));this.message=<string>Object.values(message)[0]; }
+      // welcome => {console.log((welcome.message));}
+      welcome => {
+        console.log(Object.values(welcome));
+        this.welcome = <any>Object.values(welcome);
+      }
+    );
+    this.roomsearch = new FormGroup({
+      checkin: new FormControl(' '),
+      checkout: new FormControl(' ')
+    });
+
+    //     this.rooms=ROOMS;
 
 
     const roomsearchValueChanges$ = this.roomsearch.valueChanges;
@@ -44,6 +65,15 @@ export class AppComponent implements OnInit{
       this.currentCheckInVal = x.checkin;
       this.currentCheckOutVal = x.checkout;
     });
+    /* this.message = this.httpClient.get(this.baseURL + '/api/welcome', {responseType: 'text'});
+     console.log(this.message);
+   }*/
+
+
+    /*this.getWelcomeMessages().subscribe(=> {
+      this.messages = data;})
+}*/
+
   }
 
     onSubmit({value,valid}:{value:Roomsearch,valid:boolean}){
@@ -83,7 +113,10 @@ export class AppComponent implements OnInit{
        return this.httpClient.get(this.baseURL + '/room/reservation/v1?checkin='+ this.currentCheckInVal + '&checkout='+this.currentCheckOutVal, {responseType: 'json'});
     }
 
+  getWelcomeMessage(): Observable<any>{
+    return this.httpClient.get(this.baseURL + 'api/welcome', {responseType: 'json'});
   }
+}
 
 
 

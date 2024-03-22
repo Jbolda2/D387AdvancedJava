@@ -36,6 +36,8 @@ public class Multithreading extends Thread {
         return property;
     }
 
+    //public static String welcomeMessage;
+
     @Override
     public void run(){
     Properties properties=new Properties();
@@ -70,13 +72,17 @@ public class Multithreading extends Thread {
 }
 
 @RequestMapping(value = "/welcome")
-    public ResponseEntity<String> showWelcome(){
+    public ResponseEntity<String> showWelcome() throws InterruptedException {
+
+    welcomeMessage= "";
 
     Multithreading threadOne = new Multithreading("welcome_fr_CA.properties");
     Multithreading threadTwo = new Multithreading("welcome_en_US.properties");
 
     threadOne.start();
+    Thread.sleep(1000);
     threadTwo.start();
+    Thread.sleep(1000);
 
 
 

@@ -31,6 +31,9 @@ export class AppComponent implements OnInit {
   announceWelcome$!: Observable<string>
   welcome!: string;
   message2!: Observable<string>;
+  announcePresentation$!: Observable<string>
+  presentation!:Observable<string>;
+
 
   /*getWelcomeMessages(): Observable<string[]> {
     return this.httpClient.get<string[]>(this.baseURL + 'welcome/welcome', {responseType: 'text'});
@@ -41,6 +44,7 @@ export class AppComponent implements OnInit {
 
     // this.announceWelcome$ = this.httpClient.get(this.baseURL + '/room/reservation/v1/livepresentation', {responseType: 'text'} )
     this.message2 = this.httpClient.get(this.baseURL + '/api/welcome', {responseType: 'text'})
+    this.presentation = this.httpClient.get(this.baseURL + '/announce/presentation', {responseType: 'text'})
 
     this.getWelcomeMessage().subscribe(
       // message => {console.log(Object.values(message));this.message=<string>Object.values(message)[0]; }
@@ -50,6 +54,14 @@ export class AppComponent implements OnInit {
         this.welcome = <any>Object.values(welcome);
       }
     );
+
+    this.getPresentation().subscribe(
+      presentation=>{
+        console.log(Object.values(presentation));
+        this.presentation = <any>Object.values(presentation);
+      }
+
+    )
     this.roomsearch = new FormGroup({
       checkin: new FormControl(' '),
       checkout: new FormControl(' ')
@@ -115,6 +127,10 @@ export class AppComponent implements OnInit {
 
   getWelcomeMessage(): Observable<any>{
     return this.httpClient.get(this.baseURL + 'api/welcome', {responseType: 'json'});
+  }
+
+  getPresentation(): Observable<any>{
+    return this.httpClient.get(this.baseURL + 'announce/presentation', {responseType: 'json'});
   }
 }
 

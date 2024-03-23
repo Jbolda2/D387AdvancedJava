@@ -31,7 +31,9 @@
 
 
 
-
+      <div class="scene" id="presentation3">
+        <h3>{{presentation | async}}</h3>
+      </div>
 
       <div class="row">
         <div class=""col-12>
@@ -42,6 +44,9 @@
             <img src="assets/images/intro_attractions.jpg" alt="Intro Gallery Attractions Sample Pictures">
             <img class="hidesm" src="assets/images/intro_wedding.jpg" alt="Intro Gallery Dining Sample Pictures">
           </div>
+         <!-- <div class="scene" id="presentation3">
+            <h3>{{announcePresentation$| async}}</h3>
+          </div> -->
           <h1>Book a Room</h1>
           <form class="form-horizontal" [formGroup]="roomsearch"
           (ngSubmit)="onSubmit(roomsearch)">

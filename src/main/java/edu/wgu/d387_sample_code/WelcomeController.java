@@ -9,8 +9,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 
 import static edu.wgu.d387_sample_code.Welcome.welcomeMessage;
@@ -36,6 +40,8 @@ public class Multithreading extends Thread {
         return property;
     }
 
+
+
     //public static String welcomeMessage;
 
     @Override
@@ -56,18 +62,6 @@ public class Multithreading extends Thread {
                 e.printStackTrace();
             }
         });
-    /*messageExecutor.execute(()-> {
-        try {
-            InputStream stream = new ClassPathResource("welcome_fr_CA.properties").getInputStream();
-            properties.load(stream);
-            //System.out.println(properties.getProperty("welcome"));
-            welcome.setFrench(properties.getProperty("welcome"));
-            //System.out.println(Welcome.getFrench());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    });*/
-
 }
 }
 
@@ -88,7 +82,6 @@ public class Multithreading extends Thread {
 
     return new ResponseEntity<String> (welcomeMessage, HttpStatus.OK);
 }
-
 
 }
 

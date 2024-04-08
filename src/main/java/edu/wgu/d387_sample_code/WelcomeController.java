@@ -40,10 +40,6 @@ public class Multithreading extends Thread {
         return property;
     }
 
-
-
-    //public static String welcomeMessage;
-
     @Override
     public void run(){
     Properties properties=new Properties();
@@ -57,7 +53,6 @@ public class Multithreading extends Thread {
                 String message = properties.getProperty("welcome");
                 welcomeMessage = welcomeMessage + message + "\n";
 
-                //System.out.println(properties.getProperty("welcome"));
             } catch (Exception e) {
                 e.printStackTrace();
             }

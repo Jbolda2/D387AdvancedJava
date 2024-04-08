@@ -25,9 +25,6 @@ public class Welcome {
 
     public static String welcomeMessage = "";
 
-    public static void setWelcomeMessages(String welcomeMessage, int i) {
-        welcomeMessages[i] = welcomeMessage;
-    }
 }
 
 
